@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
-export default function Button({template, children}) {
+export default function Button({template, children, ...otherProps}) {
     return (
-        <Wrappler template={template} >
+        <Wrappler template={template} otherProps={otherProps}>
             <button type='submit'>{children}</button>
         </Wrappler>
     )

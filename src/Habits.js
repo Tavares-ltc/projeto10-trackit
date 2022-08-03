@@ -1,8 +1,9 @@
+import "@fontsource/lexend-deca";
 import Button from "./Button"
 import styled from 'styled-components'
-import "@fontsource/lexend-deca";
+import CreateHabit from "./CreateHabit";
 
-export default function UserHabits() {
+export default function Habits() {
     return (
         <Wrapple>
             <Container>
@@ -10,6 +11,7 @@ export default function UserHabits() {
                     <h1> Meus hábitos </h1>
                     <Button template={'addHabit'} >+</Button>
                 </HabitsHeader>
+                <CreateHabit/>
                 <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
             </Container>
         </Wrapple>
@@ -17,7 +19,6 @@ export default function UserHabits() {
 }
 
 const Wrapple = styled.div`
-margin-top: 98px;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -25,7 +26,7 @@ align-items: center;
 
 `
 const Container = styled.div`
-width: 80%;
+width: 380px;
 p {
     margin-top: 29px;
     font-size: 18px;
@@ -40,5 +41,6 @@ align-items: center;
 h1 {
     font-family: "Lexend Deca";
     color: #126BA5;
+    font-size: 18px;
 }
 `
