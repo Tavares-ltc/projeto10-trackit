@@ -1,4 +1,3 @@
-import { Children } from 'react';
 import styled from 'styled-components';
 import Form from "./Form";
 
@@ -16,7 +15,6 @@ margin-top: 68px;
 display: flex;
 flex-direction: column;
 align-items: center;
-
 img {
     width: 180px;
     height: 180px;

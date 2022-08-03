@@ -3,7 +3,7 @@ import "@fontsource/lexend-deca";
 
 const GlobalStyle = createGlobalStyle`
 @media screen and (min-width: 690px) {
-    body {
+    h1 {
         width: 375px;
         font-family: "Lexend Deca";
     }

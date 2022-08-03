@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@fontsource/lexend-deca": "^4.5.10",
+    "@fontsource/playball": "^4.5.9",
     "dayjs": "^1.11.4",
     "react": "^17.0.2",
     "react-circular-progressbar": "^2.1.0",

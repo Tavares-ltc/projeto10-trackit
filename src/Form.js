@@ -1,36 +1,36 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Button from './Button'
 
 
 export default function Form({ type, setUserData, userData }) {
-console.log(userData)
+    const navigate = useNavigate()
+    console.log(userData)
     switch (type) {
         case 'login':
             return (
                 <Wrapple>
-                    <form onSubmit={handleForm}>
+                    <form onSubmit={submit}>
                         <input type="text" placeholder='email' name="email" onChange={handleForm} value={userData.email} required />
-                        <input type="text" placeholder="senha" name="password" onChange={handleForm} value={userData.password} required />
-                        <button type='submit'>Entrar</button>
+                        <input type="password" placeholder="senha" name="password" onChange={handleForm} value={userData.password} required />
+                        <Button>Entrar</Button>
                     </form>
                     <Link to='/cadastro'><h3>Não tem uma conta? Cadastre-se!</h3></Link>
                 </Wrapple>
             )
-            break
         case 'signIn':
             return (
                 <Wrapple>
-                    <form onSubmit={handleForm}>
+                    <form onSubmit={submit}>
                         <input type="email" placeholder='email' name="email" onChange={handleForm} value={userData.email} required />
-                        <input type="password" placeholder="senha" name="password" onChange={handleForm} value={userData.password} required />
+                        <input type="text" placeholder="senha" name="password" onChange={handleForm} value={userData.password} required />
                         <input type="text" placeholder='nome' name="name" onChange={handleForm} value={userData.name} required />
                         <input type="url" placeholder="foto" name="picture" onChange={handleForm} value={userData.picture} required />
-                        <button type='submit'>Cadastrar</button>
+                        <Button>Cadastrar</Button>
                     </form>
-                    <Link to='/cadastro'><h3>Já tem uma conta? Faça login!</h3></Link>
+                    <Link to='/'><h3>Já tem uma conta? Faça login!</h3></Link>
                 </Wrapple>
             )
-            break;
         default:
             return;
     }
@@ -40,6 +40,22 @@ console.log(userData)
             ...userData,
             [event.target.name]: event.target.value,
         })
+    }
+    function submit(event) {
+        event.preventDefault();
+
+        if (userData.name && userData.picture) {
+            function createUser() {
+                console.log('Ainda em desenvolvimento:' + { userData })
+            }
+            createUser();
+        } else {
+            function login() {
+                console.log('Ainda em desenvolvimento' + { userData });
+                navigate('/habitos');
+            }
+            login()
+        }
     }
 }
 
@@ -55,7 +71,7 @@ form {
     gap: 6px;
     margin-bottom: 25px;
 }
- input, button {
+ input {
     width: 303px;
     height: 45px;
     border: 1px solid #d5d5d5;
@@ -66,13 +82,5 @@ form {
  h3 {
     color: #52b6ff;
     text-decoration: underline #52b6ff;
-}
-button {
-    color: #FFFFFF;
-    width: 303px;
-    height: 45px;
-    background-color: #52B6FF;
-    border-radius: 3px;
-    border: none;
 }
 `
