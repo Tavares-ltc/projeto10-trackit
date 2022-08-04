@@ -4,7 +4,7 @@ import HomePage from './HomePage';
 import HabitsPage from './HabitsPage'
 
 export default function App() {
-    const [userData, setUserData] = useState({ email: '', password: '', name: '', picture: '' })
+    const [userData, setUserData] = useState({ email: '', password: '', name: '', image: '' })
 
     return (
         <>

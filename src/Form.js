@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button'
 import Days from "./Days";
-import { signUp } from './trackit'
+import { signUp, login } from './trackit'
 import { useEffect, useState } from "react";
-
 
 export default function Form({ type, setUserData, userData }) {
     const [selectedDays, setSelectedDays] = useState([])
@@ -38,8 +37,8 @@ export default function Form({ type, setUserData, userData }) {
                         <input type="email" placeholder='email' name="email" onChange={handleForm} value={userData.email} required />
                         <input type="text" placeholder="senha" name="password" onChange={handleForm} value={userData.password} required />
                         <input type="text" placeholder='nome' name="name" onChange={handleForm} value={userData.name} required />
-                        <input type="url" placeholder="foto" name="picture" onChange={handleForm} value={userData.picture} required />
-                        <Button>Cadastrar</Button>
+                        <input type="url" placeholder="foto" name="image" onChange={handleForm} value={userData.image} required />
+                        <Button loading={loading}>Cadastrar</Button>
                     </form>
                     <Link to='/'><h3>Já tem uma conta? Faça login!</h3></Link>
                 </Wrapple>
@@ -77,19 +76,23 @@ export default function Form({ type, setUserData, userData }) {
     }
     function submit(event) {
         event.preventDefault();
+        console.log(userData)
+        setLoading(true);
 
-        if (userData.name && userData.picture) {
-            signUp(userData)
+        if (userData.name && userData.image) {
+            signUp(userData).then(()=> {
+                console.log('yey')
+                setLoading(false)})
         } else {
-            function login() {
-                console.log('Ainda em desenvolvimento' + { userData });
-                navigate('/habitos');
-            }
-            login()
+            login(userData)
+            .then(()=> navigate('/habitos'))
         }
     }
 }
-
+// .catch(()=> {
+//     setLoading(false)})
+//     alert('Algo saiu errado, talvez o usuário ja exista.')
+// .catch(()=> alert('Algo deu errado. Cheque o usuario ou a senha.'))
 
 const Wrapple = styled.div`
 display: flex;
