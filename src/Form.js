@@ -2,22 +2,19 @@ import "@fontsource/lexend-deca";
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button'
+import Days from "./Days";
 import { useEffect, useState } from "react";
 
 
 export default function Form({ type, setUserData, userData }) {
     const [selectedDays, setSelectedDays] = useState([])
-    let days = []
+    const [habit, setHabit] = useState(
+        {
+            name: '',
+            days: []
+        })
     const weekdays = ["D", "S", "T", "Q", "Q", "S", "S"]
 
-    function selectDay(num) {
-        if (days.includes(num)) {
-            days = days.filter((value) => value !== num)
-        } else {
-            days.push(num)
-        }
-        console.log(days)
-    }
 
     const navigate = useNavigate()
     switch (type) {
@@ -49,19 +46,13 @@ export default function Form({ type, setUserData, userData }) {
             return (
                 <Wrapple>
                     <form onSubmit={submit}>
-                        <input type="text" placeholder='nome do habito' name="habito" required />
+                        <input type="text" placeholder='nome do habito' name="name" onChange={handleHabit} value={selectedDays.neme} required />
                         <Weekdays>
-                            <Day onClick={() => selectDay(0)}>D</Day>
-                            <Day onClick={() => selectDay(1)}>S</Day>
-                            <Day onClick={() => selectDay(2)}>T</Day>
-                            <Day onClick={() => selectDay(3)}>Q</Day>
-                            <Day onClick={() => selectDay(4)}>Q</Day>
-                            <Day onClick={() => selectDay(5)}>S</Day>
-                            <Day onClick={() => selectDay(6)}>S</Day>
+                            {weekdays.map((item, index) => <Days item={item} index={index} key={index} setHabit={ setHabit} habit={habit} />)}
                         </Weekdays>
                         <Container>
                             <h3>Calcelar</h3>
-                            <Button onClick={() => alert('a')} template={'small'}>Salvar</Button>
+                            <Button template={'small'}>Salvar</Button>
                         </Container>
                     </form>
                 </Wrapple>
@@ -73,6 +64,14 @@ export default function Form({ type, setUserData, userData }) {
             ...userData,
             [event.target.name]: event.target.value,
         })
+    }
+    function handleHabit(event) {
+        setHabit({
+            ...habit,
+            [event.target.name]: event.target.value,
+        })
+        console.log(selectedDays)
+        console.log(habit)
     }
     function submit(event) {
         event.preventDefault();
@@ -124,18 +123,7 @@ gap: 5px;
 align-items: center;
 
 `
-const Day = styled.div`
-width: 30px;
-height: 30px;
-border-radius: 3px;
-border: solid 2px #D4D4D4;
-font-family: "Lexend Deca";
-font-size: 20px;
-display: flex;
-justify-content: center;
-align-items: center;
-color: #7c7b7bec;
-    `
+
 
 const Container = styled.div`
 margin-top: 20px;
@@ -144,3 +132,11 @@ justify-content: end;
 align-items: center;
 gap: 20px;
 `
+
+{/* <Day onClick={() => selectDay(0)}>D</Day>
+                            <Day onClick={() => selectDay(1)}>S</Day>
+                            <Day onClick={() => selectDay(2)}>T</Day>
+                            <Day onClick={() => selectDay(3)}>Q</Day>
+                            <Day onClick={() => selectDay(4)}>Q</Day>
+                            <Day onClick={() => selectDay(5)}>S</Day>
+                            <Day onClick={() => selectDay(6)}>S</Day> */}

@@ -12,7 +12,7 @@ export default function App() {
                 <Routes>
                     <Route path='/' element={<HomePage type={'login'} setUserData={setUserData} userData={userData} />} />
                     <Route path='/cadastro' element={<HomePage type={'signIn'} setUserData={setUserData} userData={userData} />} />
-                    <Route path='/habitos' element={<HabitsPage />} />
+                    <Route path='/habitos' element={<HabitsPage  />} />
                 </Routes>
             </BrowserRouter>
         </>
