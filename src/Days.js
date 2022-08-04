@@ -1,22 +1,26 @@
 import styled from 'styled-components'
 import { useState } from 'react'
 
-export default function Days({item, index, habit, setHabit}) {
+export default function Days({ item, index, habit, setHabit }) {
 
     const [clicked, setClicked] = useState(false)
-    
+
 
     function selectDay(num) {
         if (habit["days"].includes(num)) {
-            setHabit({name: [...habit['name']], 
-            days: [...habit['days']].filter(day => day !== num)})
+            setHabit({
+                name: [...habit['name']],
+                days: [...habit['days']].filter(day => day !== num)
+            })
         } else {
-            setHabit({name: [...habit['name']],
-             days: [...habit['days'],num]})
+            setHabit({
+                name: [...habit['name']],
+                days: [...habit['days'], num]
+            })
         }
         console.log(habit)
     }
-    
+
 
     return (
         <Day clicked={clicked} onClick={() => {
@@ -35,5 +39,10 @@ font-size: 20px;
 display: flex;
 justify-content: center;
 align-items: center;
-color: ${(props)=> (props.clicked)? 'red' :'#7c7b7bec'  } ;
-`
+background-color: ${(props) => (props.clicked) ? '#CFCFCF' :'#ffffff'  } ;
+;
+color: ${(props) => (props.clicked) ? '#FFFFFF' :'#7c7b7bec'  } ;
+&:hover {
+    cursor: pointer;
+}
+    `

@@ -44,6 +44,6 @@ align-items: center;
 h1 {
     font-family: "Lexend Deca";
     color: #126BA5;
-    font-size: 18px;
+    font-size: 23px;
 }
 `

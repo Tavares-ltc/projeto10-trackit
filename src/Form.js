@@ -3,11 +3,13 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button'
 import Days from "./Days";
+import { signUp } from './trackit'
 import { useEffect, useState } from "react";
 
 
 export default function Form({ type, setUserData, userData }) {
     const [selectedDays, setSelectedDays] = useState([])
+    const [loading, setLoading] = useState(false)
     const [habit, setHabit] = useState(
         {
             name: '',
@@ -52,7 +54,7 @@ export default function Form({ type, setUserData, userData }) {
                         </Weekdays>
                         <Container>
                             <h3>Calcelar</h3>
-                            <Button template={'small'}>Salvar</Button>
+                            <Button loading={loading} template={'small'}>Salvar</Button>
                         </Container>
                     </form>
                 </Wrapple>
@@ -77,10 +79,7 @@ export default function Form({ type, setUserData, userData }) {
         event.preventDefault();
 
         if (userData.name && userData.picture) {
-            function createUser() {
-                console.log('Ainda em desenvolvimento:' + { userData })
-            }
-            createUser();
+            signUp(userData)
         } else {
             function login() {
                 console.log('Ainda em desenvolvimento' + { userData });

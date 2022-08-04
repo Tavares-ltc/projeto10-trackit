@@ -18,18 +18,33 @@ button {
                 return 45;
             case 'small':
                 return 84;
+            case 'rounded':
+                return 91;  
             default:
                 return 303;
         }
     }
     }px;
-
-height: ${(props) => props.template ? 35 : 45}px;
+height: ${(props) => {
+            switch (props.template) {
+            case 'addHabit':
+                return 35;
+            case 'small':
+                return 35;
+            case 'rounded':
+                return 91;  
+            default:
+                return 45;
+        }
+}}px;
 border: 1px solid #d5d5d5;
-border-radius: 5px;
+border-radius: ${(props) => (props.template === 'rounded')? 100 : 5}px;
 font-size: 20px;
 font-family: "Lexend Deca";
 color: #FFFFFF;
 background-color: #52B6FF;
+&:hover {
+    cursor: pointer;
+}
 }
 `

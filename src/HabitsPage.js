@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import Header from './Header'
 import Habits from './Habits'
+import Footer from './Footer'
 
 export default function HabitsPage() {
     return (
@@ -9,6 +10,7 @@ export default function HabitsPage() {
             <Habits>
 
             </Habits>
+            <Footer/>
         </PageWrappler>
     )
 }
