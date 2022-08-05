@@ -8,9 +8,9 @@ const promise = axios.post(`${BASE_URL}sign-up`, userData)
 console.log(userData)
 return promise
 }
-function login (userData) {
-    const promise = axios.post(`${BASE_URL}login`, userData)
-    console.log(userData)
+function login (loginData) {
+    const promise = axios.post(`${BASE_URL}login`, loginData)
+    console.log(loginData)
     console.log(promise)
     return promise
 }

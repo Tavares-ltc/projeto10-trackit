@@ -22,10 +22,10 @@ export default function Form({ type, setUserData, userData }) {
         case 'login':
             return (
                 <Wrapple>
-                    <form onSubmit={submit}>
+                    <form onSubmit={logon}>
                         <input type="text" placeholder='email' name="email" onChange={handleForm} value={userData.email} required />
                         <input type="password" placeholder="senha" name="password" onChange={handleForm} value={userData.password} required />
-                        <Button>Entrar</Button>
+                        <Button loading={loading}>Entrar</Button>
                     </form>
                     <Link to='/cadastro'><h3>Não tem uma conta? Cadastre-se!</h3></Link>
                 </Wrapple>
@@ -33,7 +33,7 @@ export default function Form({ type, setUserData, userData }) {
         case 'signIn':
             return (
                 <Wrapple>
-                    <form onSubmit={submit}>
+                    <form onSubmit={signIn}>
                         <input type="email" placeholder='email' name="email" onChange={handleForm} value={userData.email} required />
                         <input type="text" placeholder="senha" name="password" onChange={handleForm} value={userData.password} required />
                         <input type="text" placeholder='nome' name="name" onChange={handleForm} value={userData.name} required />
@@ -46,10 +46,10 @@ export default function Form({ type, setUserData, userData }) {
         default:
             return (
                 <Wrapple>
-                    <form onSubmit={submit}>
+                    <form onSubmit={() => alert('a')}>
                         <input type="text" placeholder='nome do habito' name="name" onChange={handleHabit} value={selectedDays.neme} required />
                         <Weekdays>
-                            {weekdays.map((item, index) => <Days item={item} index={index} key={index} setHabit={ setHabit} habit={habit} />)}
+                            {weekdays.map((item, index) => <Days item={item} index={index} key={index} setHabit={setHabit} habit={habit} />)}
                         </Weekdays>
                         <Container>
                             <h3>Calcelar</h3>
@@ -74,25 +74,37 @@ export default function Form({ type, setUserData, userData }) {
         console.log(selectedDays)
         console.log(habit)
     }
-    function submit(event) {
+    function signIn(event) {
         event.preventDefault();
-        console.log(userData)
+        console.log(userData);
         setLoading(true);
-
-        if (userData.name && userData.image) {
-            signUp(userData).then(()=> {
+        signUp(userData)
+            .then(() => {
                 console.log('yey')
-                setLoading(false)})
-        } else {
-            login(userData)
-            .then(()=> navigate('/habitos'))
-        }
+                setLoading(false)
+            })
+            .catch(() => {
+                alert('Algo deu errado, ou o usuário já existe.')
+                setLoading(false)
+            })
+    }
+    function logon(event) {
+        event.preventDefault();
+        setLoading(true);
+        const loginData = { email: userData.email, password: userData.password }
+        console.log(loginData)
+        login(loginData)
+            .then((promise) => {
+                setLoading(false)
+                navigate('/habitos')
+                localStorage.setItem('userData', promise.data)
+            })
+            .catch(() => {
+                alert('Algo deu errado, verifique os dados e tente novamente.')
+                setLoading(false)
+            })
     }
 }
-// .catch(()=> {
-//     setLoading(false)})
-//     alert('Algo saiu errado, talvez o usuário ja exista.')
-// .catch(()=> alert('Algo deu errado. Cheque o usuario ou a senha.'))
 
 const Wrapple = styled.div`
 display: flex;
