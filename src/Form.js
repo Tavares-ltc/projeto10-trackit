@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button'
 import Days from "./Days";
-import { signUp, login } from './trackit'
+import { signUp, login, createHabit } from './trackit'
 import { useEffect, useState } from "react";
 
-export default function Form({ type, setUserData, userData }) {
+export default function Form({ type, setUserData, userData, setHasNewHabit, setDisplay }) {
     const [selectedDays, setSelectedDays] = useState([])
     const [loading, setLoading] = useState(false)
     const [habit, setHabit] = useState(
@@ -16,15 +16,14 @@ export default function Form({ type, setUserData, userData }) {
         })
     const weekdays = ["D", "S", "T", "Q", "Q", "S", "S"]
 
-
     const navigate = useNavigate()
     switch (type) {
         case 'login':
             return (
                 <Wrapple>
                     <form onSubmit={logon}>
-                        <input type="text" placeholder='email' name="email" onChange={handleForm} value={userData.email} required />
-                        <input type="password" placeholder="senha" name="password" onChange={handleForm} value={userData.password} required />
+                        <input type="text" placeholder='email' name="email" disabled={(loading) ? "disabled" : ""} onChange={handleForm} value={userData.email} required />
+                        <input type="password" placeholder="senha" name="password" disabled={(loading) ? "disabled" : ""} onChange={handleForm} value={userData.password} required />
                         <Button loading={loading}>Entrar</Button>
                     </form>
                     <Link to='/cadastro'><h3>Não tem uma conta? Cadastre-se!</h3></Link>
@@ -34,10 +33,10 @@ export default function Form({ type, setUserData, userData }) {
             return (
                 <Wrapple>
                     <form onSubmit={signIn}>
-                        <input type="email" placeholder='email' name="email" onChange={handleForm} value={userData.email} required />
-                        <input type="text" placeholder="senha" name="password" onChange={handleForm} value={userData.password} required />
-                        <input type="text" placeholder='nome' name="name" onChange={handleForm} value={userData.name} required />
-                        <input type="url" placeholder="foto" name="image" onChange={handleForm} value={userData.image} required />
+                        <input type="email" placeholder='email' name="email" disabled={(loading) ? "disabled" : ""} onChange={handleForm} value={userData.email} required />
+                        <input type="text" placeholder="senha" name="password" disabled={(loading) ? "disabled" : ""} onChange={handleForm} value={userData.password} required />
+                        <input type="text" placeholder='nome' name="name" disabled={(loading) ? "disabled" : ""} onChange={handleForm} value={userData.name} required />
+                        <input type="url" placeholder="foto" name="image" disabled={(loading) ? "disabled" : ""} onChange={handleForm} value={userData.image} required />
                         <Button loading={loading}>Cadastrar</Button>
                     </form>
                     <Link to='/'><h3>Já tem uma conta? Faça login!</h3></Link>
@@ -46,34 +45,48 @@ export default function Form({ type, setUserData, userData }) {
         default:
             return (
                 <Wrapple>
-                    <form onSubmit={() => alert('a')}>
-                        <input type="text" placeholder='nome do habito' name="name" onChange={handleHabit} value={selectedDays.neme} required />
+                    <form onSubmit={postHabit}>
+                        <input type="text" placeholder='nome do habito' name="name" onChange={handleHabit} value={habit.name} required />
                         <Weekdays>
                             {weekdays.map((item, index) => <Days item={item} index={index} key={index} setHabit={setHabit} habit={habit} />)}
                         </Weekdays>
                         <Container>
-                            <h3>Calcelar</h3>
+                            <h3 onClick={()=> setDisplay(false)}>Calcelar</h3>
                             <Button loading={loading} template={'small'}>Salvar</Button>
                         </Container>
                     </form>
                 </Wrapple>
             )
     }
-
+    function postHabit(event) {
+        event.preventDefault();
+        if (habit.days.length > 0) {
+            
+            createHabit(habit).then( ()=> {
+                habit.name = ''
+                setHasNewHabit(habit.name)
+            }
+            )
+        } else {
+            alert('Adicione ao menos um dia ao seu hábito.')
+        }
+    }
     function handleForm(event) {
         setUserData({
             ...userData,
             [event.target.name]: event.target.value,
         })
     }
+
     function handleHabit(event) {
         setHabit({
             ...habit,
             [event.target.name]: event.target.value,
         })
         console.log(selectedDays)
-        console.log(habit)
     }
+    
+
     function signIn(event) {
         event.preventDefault();
         console.log(userData);
@@ -96,8 +109,8 @@ export default function Form({ type, setUserData, userData }) {
         login(loginData)
             .then((promise) => {
                 setLoading(false)
+                localStorage.setItem('userData', promise.data.token)
                 navigate('/habitos')
-                localStorage.setItem('userData', promise.data)
             })
             .catch(() => {
                 alert('Algo deu errado, verifique os dados e tente novamente.')
@@ -147,10 +160,3 @@ align-items: center;
 gap: 20px;
 `
 
-{/* <Day onClick={() => selectDay(0)}>D</Day>
-                            <Day onClick={() => selectDay(1)}>S</Day>
-                            <Day onClick={() => selectDay(2)}>T</Day>
-                            <Day onClick={() => selectDay(3)}>Q</Day>
-                            <Day onClick={() => selectDay(4)}>Q</Day>
-                            <Day onClick={() => selectDay(5)}>S</Day>
-                            <Day onClick={() => selectDay(6)}>S</Day> */}

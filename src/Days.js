@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useState } from 'react'
 
-export default function Days({ item, index, habit, setHabit }) {
+export default function Days({ item, index, habit, setHabit, withoutButtons, isColored }) {
 
     const [clicked, setClicked] = useState(false)
 
@@ -9,25 +9,30 @@ export default function Days({ item, index, habit, setHabit }) {
     function selectDay(num) {
         if (habit["days"].includes(num)) {
             setHabit({
-                name: [...habit['name']],
+                ...habit,
                 days: [...habit['days']].filter(day => day !== num)
             })
         } else {
             setHabit({
-                name: [...habit['name']],
+                ...habit,
                 days: [...habit['days'], num]
             })
         }
         console.log(habit)
     }
 
-
-    return (
-        <Day clicked={clicked} onClick={() => {
-            selectDay(index)
-            setClicked(!clicked)
-        }} >{item}</Day>
-    )
+    if (withoutButtons) {
+        return (
+            <Day clicked={(isColored) ? true : false}>{item}</Day>
+        )
+    } else {
+        return (
+            <Day clicked={clicked} onClick={() => {
+                selectDay(index)
+                setClicked(!clicked)
+            }} >{item}</Day>
+        )
+    }
 }
 const Day = styled.div`
 width: 30px;
@@ -39,9 +44,9 @@ font-size: 20px;
 display: flex;
 justify-content: center;
 align-items: center;
-background-color: ${(props) => (props.clicked) ? '#CFCFCF' :'#ffffff'  } ;
+background-color: ${(props) => (props.clicked) ? '#CFCFCF' : '#ffffff'} ;
 ;
-color: ${(props) => (props.clicked) ? '#FFFFFF' :'#7c7b7bec'  } ;
+color: ${(props) => (props.clicked) ? '#FFFFFF' : '#7c7b7bec'} ;
 &:hover {
     cursor: pointer;
 }

@@ -1,12 +1,14 @@
 import styled from 'styled-components'
 import Button from './Button'
+import { useNavigate } from 'react-router-dom'
 
 export default function Footer() {
+    const navigate = useNavigate()
     return (
         <Wrappler>
                 <Container>
-                    <h1>Hábitos</h1>
-                    <Button template={'rounded'}>Hoje</Button>
+                    <h1 onClick={()=> navigate('/habitos')}>Hábitos</h1>
+                    <Button onClick={()=> navigate('/hoje')} template={'rounded'}>Hoje</Button>
                     <h1>Histórico</h1>
                 </Container>
         </Wrappler>

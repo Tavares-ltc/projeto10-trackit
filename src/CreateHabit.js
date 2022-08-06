@@ -1,19 +1,15 @@
 import Form from "./Form"
 import styled from "styled-components"
 
-export default function CreateHabit({ display }) {
-    if (display) {
+export default function CreateHabit({ display, setHasNewHabit, setDisplay }) {
+
 
         return (
-            <Wraple>
-                <Form />
+            <Wraple display={display}>
+                <Form setHasNewHabit={setHasNewHabit} setDisplay={setDisplay} />
             </Wraple>
         )
-    } else {
-        return (
-            ''
-        )
-    }
+
 }
 
 const Wraple = styled.div`
@@ -24,5 +20,6 @@ width: 380px;
 height: 180px;
 background-color: #ffffff;
 border-radius: 10px;
+display: ${(props) => (props.display) ? 'block' : 'none'} ;
 `
 

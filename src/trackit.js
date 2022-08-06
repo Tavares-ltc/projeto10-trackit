@@ -1,19 +1,43 @@
 import axios from 'axios';
+import { useEffect } from 'react';
 
-const BASE_URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/'
-
-
-function signUp (userData) {
-const promise = axios.post(`${BASE_URL}sign-up`, userData)
-console.log(userData)
-return promise
+const config = {
+    headers: { Authorization: `Bearer ${localStorage.getItem('userData')}` }
 }
-function login (loginData) {
-    const promise = axios.post(`${BASE_URL}login`, loginData)
+
+const ACCOUNT_URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/'
+const BASE_URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/'
+
+function signUp(userData) {
+    const promise = axios.post(`${ACCOUNT_URL}sign-up`, userData)
+    console.log(userData)
+    return promise
+}
+function login(loginData) {
+    const promise = axios.post(`${ACCOUNT_URL}login`, loginData)
     console.log(loginData)
     console.log(promise)
     return promise
 }
 
+function createHabit(habit) {
+    const promise = axios.post(BASE_URL, habit, config);
+    return promise
+}
 
-export {signUp, login}
+function getHabits() {
+        const requisition = axios.get(BASE_URL, config)
+        return requisition
+}
+
+function deleteHabit(habitId) {
+    const promise = axios.delete(`${BASE_URL}${habitId}`, config)
+    return promise
+}
+
+function getTodayHabits() {
+    const requisition = axios.get(`${BASE_URL}today`, config)
+    return requisition
+}
+
+export { signUp, login, getHabits, createHabit, deleteHabit, getTodayHabits }

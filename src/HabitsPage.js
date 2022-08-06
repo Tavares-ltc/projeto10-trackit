@@ -4,15 +4,23 @@ import Habits from './Habits'
 import Footer from './Footer'
 
 export default function HabitsPage() {
-    return (
-        <PageWrappler>
-            <Header />
-            <Habits>
+    if (localStorage.getItem('userData')) {
 
-            </Habits>
-            <Footer/>
-        </PageWrappler>
-    )
+        return (
+            <PageWrappler>
+                <Header />
+                <Habits>
+
+                </Habits>
+                <Footer />
+            </PageWrappler>
+        )
+    }
+    else {
+        return (
+            <h1>Para ter acesso a essa parte, faça o login primeiro.</h1>
+        )
+    }
 }
 
 const PageWrappler = styled.div`

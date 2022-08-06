@@ -19,6 +19,7 @@ box-sizing: border-box;
 width: 100%;
 height: 70px;
 position: fixed;
+z-index: 2;
 top: 0;
 left: 0;
 img {
