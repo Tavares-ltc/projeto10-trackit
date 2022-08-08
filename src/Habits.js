@@ -40,9 +40,11 @@ export default function Habits() {
                                         <Days isColored={false} withoutButtons={true} item={item} index={index} key={index} />)}
                                 </Weekdays>
                                 <img onClick={() => {
-                                    deleteHabit(habit.id).then(
-                                        () => setHasNewHabit(habit.id)
-                                    )
+                                    if(window.confirm('Tem certeza que deseja excluir o hábito?')){
+                                        deleteHabit(habit.id).then(
+                                            () => setHasNewHabit(habit.id)
+                                            )
+                                        }
                                 }} src="/img/trash.svg" alt="" />
                             </Habit>
                         )

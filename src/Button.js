@@ -5,7 +5,7 @@ export default function Button({ template, children, loading, ...otherProps }) {
     if (loading) {
         return (
             <Wrappler template={template} {...otherProps}>
-                    <button type='submit'>
+                    <button type='submit' disabled={(loading) ? "disabled" : ""}>
                     <Container>
                         <ThreeDots
                             height="40"

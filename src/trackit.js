@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useEffect } from 'react';
 
 const config = {
     headers: { Authorization: `Bearer ${localStorage.getItem('userData')}` }
@@ -39,5 +38,13 @@ function getTodayHabits() {
     const requisition = axios.get(`${BASE_URL}today`, config)
     return requisition
 }
+function checkIt (activityId) {
+    const promise = axios.post(`${BASE_URL+activityId}/check`,{}, config)
+    return promise       
+}
+function unCheckIt (activityId) {
+    const promise = axios.post(`${BASE_URL+activityId}/uncheck`,{} , config)
+    return promise
+}
 
-export { signUp, login, getHabits, createHabit, deleteHabit, getTodayHabits }
+export { signUp, login, getHabits, createHabit, deleteHabit, getTodayHabits, checkIt, unCheckIt }

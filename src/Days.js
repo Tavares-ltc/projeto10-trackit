@@ -1,9 +1,8 @@
 import styled from 'styled-components'
-import { useState } from 'react'
 
 export default function Days({ item, index, habit, setHabit, withoutButtons, isColored }) {
 
-    const [clicked, setClicked] = useState(false)
+
 
 
     function selectDay(num) {
@@ -16,6 +15,7 @@ export default function Days({ item, index, habit, setHabit, withoutButtons, isC
             setHabit({
                 ...habit,
                 days: [...habit['days'], num]
+                
             })
         }
         console.log(habit)
@@ -27,9 +27,9 @@ export default function Days({ item, index, habit, setHabit, withoutButtons, isC
         )
     } else {
         return (
-            <Day clicked={clicked} onClick={() => {
+            <Day clicked={habit["days"].includes(index)} onClick={() => {
                 selectDay(index)
-                setClicked(!clicked)
+                
             }} >{item}</Day>
         )
     }

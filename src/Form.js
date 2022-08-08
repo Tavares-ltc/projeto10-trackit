@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 export default function Form({ type, setUserData, userData, setHasNewHabit, setDisplay }) {
     const [selectedDays, setSelectedDays] = useState([])
     const [loading, setLoading] = useState(false)
+    
+
     const [habit, setHabit] = useState(
         {
             name: '',
@@ -46,13 +48,13 @@ export default function Form({ type, setUserData, userData, setHasNewHabit, setD
             return (
                 <Wrapple>
                     <form onSubmit={postHabit}>
-                        <input type="text" placeholder='nome do habito' name="name" onChange={handleHabit} value={habit.name} required />
-                        <Weekdays>
-                            {weekdays.map((item, index) => <Days item={item} index={index} key={index} setHabit={setHabit} habit={habit} />)}
+                        <input type="text" placeholder='nome do habito' name="name" disabled={(loading) ? "disabled" : ""} onChange={handleHabit} value={habit.name} required />
+                        <Weekdays disabled={(loading) ? "disabled" : ""}>
+                            {weekdays.map((item, index) => <Days item={item} index={index} key={index} setHabit={setHabit} habit={habit}/>)}
                         </Weekdays>
                         <Container>
                             <h3 onClick={()=> setDisplay(false)}>Calcelar</h3>
-                            <Button loading={loading} template={'small'}>Salvar</Button>
+                            <Button  loading={loading} template={'small'}>Salvar</Button>
                         </Container>
                     </form>
                 </Wrapple>
@@ -60,15 +62,24 @@ export default function Form({ type, setUserData, userData, setHasNewHabit, setD
     }
     function postHabit(event) {
         event.preventDefault();
+        setLoading(true)
         if (habit.days.length > 0) {
             
             createHabit(habit).then( ()=> {
                 habit.name = ''
+                setHabit(
+                    {
+                        name: '',
+                        days: []
+                    })
                 setHasNewHabit(habit.name)
+                setDisplay(false)
+                setLoading(false)
             }
             )
         } else {
             alert('Adicione ao menos um dia ao seu hábito.')
+            setLoading(false)
         }
     }
     function handleForm(event) {

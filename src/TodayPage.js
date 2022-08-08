@@ -1,43 +1,49 @@
-import { getTodayHabits } from './trackit'
+import { getTodayHabits, checkIt } from './trackit'
 import styled from 'styled-components'
 import { Container, Habit } from './Habits'
 import Footer from './Footer'
 import Header from './Header'
+import Checkbox from './Checkbox'
 import { useState, useEffect } from 'react'
 
 export default function TodayPage() {
-    const [todayActivies, setTodayActivities] = useState([])
+    const [todayActivities, setTodayActivities] = useState([])
+    const [lastChange, setLastChange] = useState([])
     useEffect(() => {
         getTodayHabits().then((habits) => {
             setTodayActivities(habits.data)
         })
-    }, [])
-    console.log(todayActivies)
-
+    }, [lastChange])
+    let percentageDone = (todayActivities.filter((item) => item.done === true)).length* 100 / todayActivities.length
+    
     return (
         <>
             <Header />
             <Wrappler>
                 <Container>
                     <TodayHeader>
-                        <h1>Segunda, dia po</h1>
-                        <p> Nenhum hábito concluido ainda.</p>
+                        <h1>Domingo, dia 7 de agosto</h1>
+                        {(percentageDone === 0) ? <p> Nenhum hábito concluido ainda.</p> : <p> {percentageDone.toFixed(0)}% dos hábitos concluídos.</p> }
+                        
+
                     </TodayHeader>
-                    <TodayActivies>
-                        {todayActivies.map((activity, index) =>
-                            <Activity key={index}>
-                                <div>
-                                    <h1>{activity.name}</h1>
-                                    <p>Sequência atual:<bold> {activity.currentSequence}</bold></p>
-                                    {(activity.currentSequence < activity.highestSequence) ?
-                                        <p>Seu recorde: {activity.highestSequence}</p> :
-                                        <p>Seu recorde:<bold> {activity.highestSequence}</bold></p>}
-                                </div>
+                    <TodayActivities>
+                        {todayActivities.map((activity, index) => {
+                            return (
+                                <Activity key={index}>
+                                    <div>
+                                        <h1>{activity.name}</h1>
+                                        <p>Sequência atual:<strong> {activity.currentSequence}</strong></p>
+                                        {(activity.currentSequence < activity.highestSequence) ?
+                                            <p>Seu recorde: {activity.highestSequence}</p> :
+                                            <p>Seu recorde:<strong> {activity.highestSequence}</strong></p>}
+                                    </div>
+                                    <Checkbox key={index} isDone={activity.done} activityId={activity.id} setLastChange={setLastChange} lastChange={lastChange} />
+                                </Activity>
+                            )
+                        })}
 
-                                <Checkbox />
-                            </Activity>)}
-
-                    </TodayActivies>
+                    </TodayActivities>
 
                 </Container>
             </Wrappler>
@@ -65,7 +71,7 @@ min-height: 100vh;
 display: flex;
 justify-content: center;
 `
-const TodayActivies = styled.div`
+const TodayActivities = styled.div`
 width: 50px;
 h1 {
     width: 230px;
@@ -78,23 +84,11 @@ p {
 }
 
 `
-const Checkbox = styled.div`
-width: 69px;
-height: 69px;
-border-radius: 3px;
-background-color: #8FC549;
-box-sizing: content-box;
-position: absolute;
-right: 0;
-margin: 5px;
-margin-right: 10px;
 
-
-`
 
 const Activity = styled(Habit)`
  display: flex;
- bold {
+ strong {
     color: #8FC549;
  }
 `
