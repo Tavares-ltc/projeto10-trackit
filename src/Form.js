@@ -53,7 +53,7 @@ export default function Form({ type, setUserData, userData, setHasNewHabit, setD
                             {weekdays.map((item, index) => <Days item={item} index={index} key={index} setHabit={setHabit} habit={habit}/>)}
                         </Weekdays>
                         <Container>
-                            <h3 onClick={()=> setDisplay(false)}>Calcelar</h3>
+                            <h3 onClick={()=> setDisplay(false)}>Cancelar</h3>
                             <Button  loading={loading} template={'small'}>Salvar</Button>
                         </Container>
                     </form>
@@ -77,6 +77,10 @@ export default function Form({ type, setUserData, userData, setHasNewHabit, setD
                 setLoading(false)
             }
             )
+            .catch(()=> {
+                alert('Algo saiu errado.')
+                setLoading(false)
+            })
         } else {
             alert('Adicione ao menos um dia ao seu hábito.')
             setLoading(false)
@@ -118,7 +122,7 @@ export default function Form({ type, setUserData, userData, setHasNewHabit, setD
             .then((promise) => {
                 localStorage.setItem('userData', promise.data.token)
                 localStorage.setItem('img', promise.data.image)
-                
+
                 setLoading(false)
                 navigate('/habitos')
             })
@@ -152,6 +156,9 @@ form {
  h3 {
     color: #52b6ff;
     text-decoration: underline #52b6ff;
+    &:hover {
+     cursor: pointer;   
+    }
 }
 `
 const Weekdays = styled.div`

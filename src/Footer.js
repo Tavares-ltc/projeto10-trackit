@@ -42,6 +42,9 @@ height: 70px;
 width: 100vw;
 background-color: white;
 padding: 10px;
+h1:hover{
+    cursor: pointer;
+}
 `
 const Button = styled.div`
 width: 91px;

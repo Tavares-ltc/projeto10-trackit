@@ -61,6 +61,8 @@ height: ${(props) => {
 border: 1px solid #d5d5d5;
 border-radius: ${(props) => (props.template === 'rounded') ? 100 : 5}px;
 font-size: 20px;
+display: flex;
+justify-content: center;
 font-family: "Lexend Deca";
 color: #FFFFFF;
 background-color: #52B6FF;
