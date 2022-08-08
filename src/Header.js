@@ -4,7 +4,7 @@ export default function Header() {
     return (
         <Wrapple>
             <h1>TrackIt</h1>
-            <img src="https://i.pinimg.com/736x/b4/fd/0b/b4fd0bf7276d1f98064862b160459f01.jpg" alt='' />
+            <img src={localStorage.getItem('img')} alt='' />
         </Wrapple>
     )
 }

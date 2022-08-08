@@ -16,10 +16,8 @@ export default function Habits() {
         })
     }, [hasNewHabit])
 
-    console.log('Esse é seu novo habito: ' + hasNewHabit)
     const weekdays = ["D", "S", "T", "Q", "Q", "S", "S"]
     const [display, setDisplay] = useState(false)
-    console.log(display)
     return (
         <Wrappler>
             <Container>
@@ -121,4 +119,4 @@ gap: 5px;
 align-items: center;
 
 `
-export { Container, Habit }
+export { Container, Habit, HabitsHeader }

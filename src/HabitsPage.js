@@ -30,3 +30,4 @@ padding-top: 98px;
 min-height: 100vh;
 `
 
+export {PageWrappler}

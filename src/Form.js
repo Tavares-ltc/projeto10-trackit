@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button'
 import Days from "./Days";
 import { signUp, login, createHabit } from './trackit'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Form({ type, setUserData, userData, setHasNewHabit, setDisplay }) {
     const [selectedDays, setSelectedDays] = useState([])
@@ -94,18 +94,16 @@ export default function Form({ type, setUserData, userData, setHasNewHabit, setD
             ...habit,
             [event.target.name]: event.target.value,
         })
-        console.log(selectedDays)
     }
     
 
     function signIn(event) {
         event.preventDefault();
-        console.log(userData);
         setLoading(true);
         signUp(userData)
             .then(() => {
-                console.log('yey')
                 setLoading(false)
+                navigate('/')
             })
             .catch(() => {
                 alert('Algo deu errado, ou o usuário já existe.')
@@ -116,11 +114,12 @@ export default function Form({ type, setUserData, userData, setHasNewHabit, setD
         event.preventDefault();
         setLoading(true);
         const loginData = { email: userData.email, password: userData.password }
-        console.log(loginData)
         login(loginData)
             .then((promise) => {
-                setLoading(false)
                 localStorage.setItem('userData', promise.data.token)
+                localStorage.setItem('img', promise.data.image)
+                
+                setLoading(false)
                 navigate('/habitos')
             })
             .catch(() => {

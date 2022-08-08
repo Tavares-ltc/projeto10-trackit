@@ -18,7 +18,6 @@ export default function Days({ item, index, habit, setHabit, withoutButtons, isC
                 
             })
         }
-        console.log(habit)
     }
 
     if (withoutButtons) {

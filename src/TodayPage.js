@@ -1,13 +1,20 @@
-import { getTodayHabits, checkIt } from './trackit'
+import { getTodayHabits} from './trackit'
 import styled from 'styled-components'
 import { Container, Habit } from './Habits'
 import Footer from './Footer'
 import Header from './Header'
 import Checkbox from './Checkbox'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import dayjs from "dayjs"
+import { UserContext } from './context'
 
 export default function TodayPage() {
+    const [weekday, setWeekday] = useState('')
+    const [todayActivities, setTodayActivities] = useState([])
+    const [lastChange, setLastChange] = useState([])
+
+    const {setProgressPercentage} = useContext(UserContext)
+
     useEffect(() => {
         const today = dayjs().format('dddd')
         switch (today) {
@@ -38,17 +45,13 @@ export default function TodayPage() {
 
     }, [])
 
-
-    const [weekday, setWeekday] = useState('')
-    const [todayActivities, setTodayActivities] = useState([])
-    const [lastChange, setLastChange] = useState([])
     useEffect(() => {
         getTodayHabits().then((habits) => {
             setTodayActivities(habits.data)
         })
     }, [lastChange])
     let percentageDone = (todayActivities.filter((item) => item.done === true)).length * 100 / todayActivities.length
-
+    setProgressPercentage(percentageDone.toFixed(0))
     return (
         <>
             <Header />
@@ -66,10 +69,12 @@ export default function TodayPage() {
                                 <Activity key={index}>
                                     <div>
                                         <h1>{activity.name}</h1>
-                                        <p>Sequência atual:<strong> {activity.currentSequence}</strong></p>
-                                        {(activity.currentSequence < activity.highestSequence) ?
-                                            <p>Seu recorde: {activity.highestSequence}</p> :
-                                            <p>Seu recorde:<strong> {activity.highestSequence}</strong></p>}
+                                        { (activity.done) ? <p>Sequência atual:<strong> {activity.currentSequence} dias</strong></p> :
+                                         <p>Sequência atual: {activity.currentSequence} dias</p> }
+                                        
+                                        { (activity.done && activity.currentSequence >= activity.highestSequence)?
+                                            <p>Seu recorde:<strong> {activity.highestSequence} dias</strong></p> :
+                                            <p>Seu recorde: {activity.highestSequence} dias</p>}
                                     </div>
                                     <Checkbox key={index} isDone={activity.done} activityId={activity.id} setLastChange={setLastChange} lastChange={lastChange} />
                                 </Activity>
