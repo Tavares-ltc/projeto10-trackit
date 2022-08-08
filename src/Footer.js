@@ -14,7 +14,7 @@ export default function Footer() {
                 <Button onClick={() => navigate('/hoje')} template={'rounded'}>
                     <TextContainer> <h1>Hoje</h1>
                     </TextContainer>
-                    <CircularProgressbar value={progressPercentage} background backgroundPadding={3} padding={10} styles={buildStyles({ backgroundColor: '#52B6FF', textColor: "#fff", pathColor: "#fff", trailColor: "transparent" })} />
+                    <CircularProgressbar value={progressPercentage} background backgroundPadding={3}  padding={10} styles={buildStyles({ backgroundColor: '#52B6FF',pathTransitionDuration: 0.8, textColor: "#fff", pathColor: "#fff", trailColor: "transparent" })} />
                 </Button>
                 <h1 onClick={() => navigate('/historico')}>Histórico</h1>
             </Container>
