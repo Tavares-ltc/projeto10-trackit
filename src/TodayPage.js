@@ -5,8 +5,41 @@ import Footer from './Footer'
 import Header from './Header'
 import Checkbox from './Checkbox'
 import { useState, useEffect } from 'react'
+import dayjs from "dayjs"
 
 export default function TodayPage() {
+    useEffect(() => {
+        const today = dayjs().format('dddd')
+        switch (today) {
+            case 'Sunday':
+                setWeekday('Domingo');
+                break;
+            case 'Monday':
+                setWeekday('Segunda');
+                break;
+            case 'Tuesday':
+                setWeekday('Terça');
+                break;
+            case 'Wednesday':
+                setWeekday('Quarta');
+                break;
+            case 'Thursday':
+                setWeekday('Quinta');
+                break;
+            case 'Friday':
+                setWeekday('Sexta');
+                break;
+            case 'Sunday':
+                setWeekday('Sábado');
+                break;
+            default:
+                setWeekday('');
+        }
+
+    }, [])
+
+
+    const [weekday, setWeekday] = useState('')
     const [todayActivities, setTodayActivities] = useState([])
     const [lastChange, setLastChange] = useState([])
     useEffect(() => {
@@ -14,17 +47,17 @@ export default function TodayPage() {
             setTodayActivities(habits.data)
         })
     }, [lastChange])
-    let percentageDone = (todayActivities.filter((item) => item.done === true)).length* 100 / todayActivities.length
-    
+    let percentageDone = (todayActivities.filter((item) => item.done === true)).length * 100 / todayActivities.length
+
     return (
         <>
             <Header />
             <Wrappler>
                 <Container>
                     <TodayHeader>
-                        <h1>Domingo, dia 7 de agosto</h1>
-                        {(percentageDone === 0) ? <p> Nenhum hábito concluido ainda.</p> : <p> {percentageDone.toFixed(0)}% dos hábitos concluídos.</p> }
-                        
+                        <h1>{weekday}, {dayjs().format('DD/MM')}</h1>
+                        {(percentageDone === 0) ? <p> Nenhum hábito concluido ainda.</p> : <p> {percentageDone.toFixed(0)}% dos hábitos concluídos.</p>}
+
 
                     </TodayHeader>
                     <TodayActivities>
